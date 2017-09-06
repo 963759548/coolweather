@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
 import com.firstcode.xiaolu.coolweather.db.City;
 import com.firstcode.xiaolu.coolweather.db.County;
 import com.firstcode.xiaolu.coolweather.db.Province;
@@ -30,8 +29,6 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-import static android.R.attr.type;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +70,7 @@ public class ChooseAreaFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (currentLevel == LEVEL_PROVINCE) {
-                    selectedProvince =provinceList.get(position);
+                    selectedProvince = provinceList.get(position);
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
@@ -149,7 +146,8 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_COUNTY;
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
-            String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityList;
+            int cityCode = selectedCity.getCityCode();
+            String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityCode;
             queryFromServe(address, "county");
         }
     }
@@ -199,7 +197,7 @@ public class ChooseAreaFragment extends Fragment {
     }
 
     private void closeProgressDialog() {
-        if (progressDialog == null) {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
